@@ -1,6 +1,8 @@
 import { init_maps } from "./maps";
 import { init_options } from "./options";
 import { init_plugins } from "./plugins";
+import "./global";
+
 vim.g.mapleader = " ";
 vim.g.maplocalleader = " ";
 

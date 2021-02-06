@@ -49,12 +49,12 @@ const normalConfig: MapConfigs = [
 
 export function init_maps(): void {
   for (const i of insertConfig) {
-    const options = i.options || {};
+    const options = i.options || { silent: true };
     vim.api.nvim_set_keymap("i", i.from, i.to, options);
   }
 
   for (const n of normalConfig) {
-    const options = n.options || {};
+    const options = n.options || { silent: true };
     vim.api.nvim_set_keymap("n", n.from, n.to, options);
   }
 }

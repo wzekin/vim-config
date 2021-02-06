@@ -1,10 +1,5 @@
 type _map = { [key: string]: any };
 
-declare module "*!text" {
-  const content: string;
-  export default content;
-}
-
 declare namespace vim {
   // 变量
   var g: _map;

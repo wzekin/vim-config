@@ -86,7 +86,7 @@ const plugins: PluginConfigs = [
       "nvim-treesitter/completion-treesitter",
     ],
     config: () => {
-      function __on_attach(client: any, bufnr: number) {
+      function on_attach(client: any, bufnr: number) {
         function buf_set_keymap(
           type: string,
           key: string,
@@ -232,7 +232,7 @@ const plugins: PluginConfigs = [
                 },
               },
             },
-            on_attach: __on_attach,
+            on_attach: on_attach,
           },
         },
         "rls",
@@ -267,7 +267,7 @@ const plugins: PluginConfigs = [
       const nvim_lsp: LspConfig = require("lspconfig");
       for (const lsp of servers) {
         if (typeof lsp == "string") {
-          nvim_lsp[lsp].setup({ on_attach: __on_attach });
+          nvim_lsp[lsp].setup({ on_attach: on_attach });
         } else {
           nvim_lsp[lsp[1]].setup(lsp.setup);
         }

@@ -1,4 +1,4 @@
-export function CloseAllSavedBuffer(): void {
+_G.CloseAllSavedBuffer = () => {
   function is_valid(buf_num: number): boolean {
     if (!buf_num || buf_num < 1) {
       return false;
@@ -17,11 +17,11 @@ export function CloseAllSavedBuffer(): void {
       vim.cmd(`bdelete! ${buf}`);
     }
   }
-}
+};
 
-export function SaveAndPause(): void {
+_G.SaveAndPause = () => {
   if (vim.api.nvim_buf_get_option(0, "modified") === 1) {
     vim.cmd("w");
   }
   vim.cmd("sus");
-}
+};
