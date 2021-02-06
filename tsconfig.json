@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lua",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "moduleResolution": "node",
+    "types": ["lua-types/jit"],
+    "strict": true,
+    "plugins": [{ "name": "typescript-tstl-plugin" }]
+  },
+  "tstl": {
+    "luaTarget": "JIT",
+    "luaBundleEntry": "src/index.ts",
+    "noImplicitSelf": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "vim_config",
+  "version": "1.0.0",
+  "description": "zekin's vim config",
+  "main": "src/index.ts",
+  "author": "zekin",
+  "license": "MIT",
+  "scripts": {
+    "build": "tstl",
+    "dev": "tstl --watch"
+  },
+  "devDependencies": {
+    "lua-types": "^2.8.0",
+    "typescript-to-lua": "^0.37.1"
+  },
+  "dependencies": {
+    "typescript-tstl-plugin": "^0.2.0"
+  }
+}
