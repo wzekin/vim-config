@@ -18,6 +18,8 @@ declare namespace vim {
 
   function split(path: string, s: string): any;
 
+  function inspect(arg0: any): void;
+
   function cmd(cmd: string): void;
 
   namespace api {
@@ -66,6 +68,10 @@ declare namespace vim {
     function nvim_list_bufs(): number[];
 
     function nvim_get_current_buf(): number;
+    function nvim_buf_delete(
+      buf_num: number,
+      options: { force?: boolean; unload?: boolean }
+    ): void;
   }
 }
 
