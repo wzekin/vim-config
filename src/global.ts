@@ -26,7 +26,8 @@ _G.CloseAllSavedBuffer = () => {
 };
 
 _G.SaveAndPause = () => {
-  if (vim.api.nvim_buf_get_option(0, "modified") === 1) {
+  const current = vim.api.nvim_get_current_buf();
+  if (vim.api.nvim_buf_get_option(current, "modified")) {
     vim.cmd("w");
   }
   vim.cmd("sus");
