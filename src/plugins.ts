@@ -20,6 +20,9 @@ const plugins: PluginConfigs = [
   },
   {
     [1]: "jiangmiao/auto-pairs",
+    config: () => {
+      vim.g.AutoPairsFlyMode = 0;
+    },
   },
   {
     [1]: "datwaft/bubbly.nvim",
@@ -320,29 +323,6 @@ const plugins: PluginConfigs = [
         git: 1,
         folders: 1,
         files: 1,
-      };
-
-      vim.g.nvim_tree_bindings = {
-        edit: ["<CR>", "o"],
-        edit_vsplit: "<C-v>",
-        edit_split: "<C-x>",
-        edit_tab: "<C-t>",
-        close_node: ["<S-CR>", "<BS>"],
-        toggle_ignored: "I",
-        oggle_dotfiles: "H",
-        refresh: "R",
-        preview: "<Nop>",
-        cd: "<C-]>",
-        create: "a",
-        remove: "d",
-        rename: "r",
-        cut: "x",
-        copy: "c",
-        paste: "p",
-        prev_git_item: "[c",
-        next_git_item: "]c",
-        dir_up: "-",
-        close: "q",
       };
     },
   },
