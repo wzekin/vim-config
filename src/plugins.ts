@@ -83,6 +83,17 @@ const plugins: PluginConfigs = [
     },
   },
   {
+    [1]: "aca/completion-tabnine",
+    run: "./install.sh",
+    config: () => {
+      //" max tabnine completion options(default: 7)
+      vim.g.completion_tabnine_max_num_results = 3;
+
+      //" sort by tabnine score (default: 0)
+      vim.g.completion_tabnine_sort_by_details = 1;
+    },
+  },
+  {
     [1]: "nvim-lua/completion-nvim",
     requires: [
       "neovim/nvim-lspconfig",
@@ -251,7 +262,7 @@ const plugins: PluginConfigs = [
       vim.g.completion_chain_complete_list = {
         default: {
           default: [
-            { complete_items: ["lsp", "snippet", "path"] },
+            { complete_items: ["lsp", "snippet", "path", "tabnine"] },
             { mode: "<c-p>" },
             { mode: "<c-n>" },
           ],
