@@ -9,7 +9,7 @@ const options: OptionConfigs = {
   expandtab: true,
   // 设置编辑时制表符占用空格数
   tabstop: 2,
-  // 设置格式化时制表符占用空格数
+ // 设置格式化时制表符占用空格数
   shiftwidth: 2,
   // 让 vim 把连续数量的空格视为一个制表符
   softtabstop: 2,
@@ -18,23 +18,10 @@ const options: OptionConfigs = {
   // vim 自身命令行模式智能补全
   wildmenu: true,
   hidden: true,
-  // 主题相关
-  background: "dark",
-  t_Co: 256,
-  // 总是显示状态栏
-  laststatus: 2,
   // 开启行号显示
   number: true,
-  // 高亮显示当前行/列
-  cursorline: true,
-  cursorcolumn: true,
   // 高亮显示搜索结果
   hlsearch: true,
-  //折叠相关
-  foldmethod: "expr",
-  foldexpr: "nvim_treesitter#foldexpr()",
-  // 启动 vim 时关闭折叠代码
-  nofoldenable: true,
   // 设置历史容量
   history: 2000,
   // create undo file
