@@ -87,7 +87,7 @@ const plugins: PluginConfigs = [
     run: "./install.sh",
     config: () => {
       //" max tabnine completion options(default: 7)
-      vim.g.completion_tabnine_max_num_results = 3;
+      vim.g.completion_tabnine_max_num_results = 1;
 
       //" sort by tabnine score (default: 0)
       vim.g.completion_tabnine_sort_by_details = 1;
@@ -249,8 +249,7 @@ const plugins: PluginConfigs = [
             on_attach: on_attach,
           },
         },
-        "rls",
-        "angularls",
+        "rust_analyzer",
         "clangd",
         "gopls",
         "jsonls",

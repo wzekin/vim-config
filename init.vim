@@ -42,3 +42,5 @@ augroup fmt
   autocmd!
   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ || endtry
 augroup END
+
+command Refresh :write | edit | TSBufEnable highlight
