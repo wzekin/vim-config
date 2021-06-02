@@ -7,7 +7,7 @@ filetype plugin on
 " 自适应不同语言的智能缩进
 filetype indent on
 
-colorscheme gruvbox8
+colorscheme onedark
 
 " 终端透明
 hi! Normal ctermbg=NONE guibg=NONE

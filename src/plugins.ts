@@ -2,6 +2,7 @@ interface PluginConfig {
   [1]: string;
   disable?: boolean;
   opt?: boolean;
+  setup?: () => void;
   config?: () => void;
   run?: (() => void) | string;
   requires?: string[];
@@ -12,16 +13,12 @@ type PluginConfigs = PluginConfig[];
 
 const plugins: PluginConfigs = [
   {
-    [1]: "skywind3000/asynctasks.vim",
-    requires: ["skywind3000/asyncrun.vim"],
+    [1]: "windwp/nvim-autopairs",
     config: () => {
-      vim.g.asyncrun_open = 6;
-    },
-  },
-  {
-    [1]: "jiangmiao/auto-pairs",
-    config: () => {
-      vim.g.AutoPairsFlyMode = 0;
+      const npairs = require("nvim-autopairs");
+      npairs.setup({
+        check_ts: true,
+      });
     },
   },
   {
@@ -83,24 +80,10 @@ const plugins: PluginConfigs = [
     },
   },
   {
-    [1]: "aca/completion-tabnine",
-    run: "./install.sh",
+    [1]: "hrsh7th/nvim-compe",
+    requires: ["neovim/nvim-lspconfig"],
     config: () => {
-      //" max tabnine completion options(default: 7)
-      vim.g.completion_tabnine_max_num_results = 1;
-
-      //" sort by tabnine score (default: 0)
-      vim.g.completion_tabnine_sort_by_details = 1;
-    },
-  },
-  {
-    [1]: "nvim-lua/completion-nvim",
-    requires: [
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/completion-treesitter",
-    ],
-    config: () => {
-      function on_attach(client: any, bufnr: number) {
+      /* function on_attach(client: any, bufnr: number) {
         function buf_set_keymap(
           type: string,
           key: string,
@@ -219,7 +202,7 @@ const plugins: PluginConfigs = [
             false
           );
         }
-      }
+      } */
       const servers = [
         {
           [1]: "sumneko_lua",
@@ -231,6 +214,7 @@ const plugins: PluginConfigs = [
                   // Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                   version: "LuaJIT",
                   // Setup your lua path
+                  //@ts-ignore
                   path: vim.split(package.path, ";"),
                 },
                 diagnostics: {
@@ -246,7 +230,7 @@ const plugins: PluginConfigs = [
                 },
               },
             },
-            on_attach: on_attach,
+            // on_attach: on_attach,
           },
         },
         "rust_analyzer",
@@ -258,47 +242,43 @@ const plugins: PluginConfigs = [
         "tsserver",
       ];
 
-      vim.g.completion_chain_complete_list = {
-        default: {
-          default: [
-            { complete_items: ["lsp", "snippet", "path", "tabnine"] },
-            { mode: "<c-p>" },
-            { mode: "<c-n>" },
-          ],
-          comment: [],
-          string: [],
-        },
-      };
-      vim.g.completion_matching_strategy_list = [
-        "exact",
-        "substring",
-        "fuzzy",
-        "all",
-      ];
-      vim.g.completion_matching_smart_case = 1;
-
       const nvim_lsp: LspConfig = require("lspconfig");
       for (const lsp of servers) {
         if (typeof lsp == "string") {
-          nvim_lsp[lsp].setup({ on_attach: on_attach });
+          nvim_lsp[lsp].setup({});
         } else {
           nvim_lsp[lsp[1]].setup(lsp.setup);
         }
       }
 
-      vim.cmd("autocmd BufEnter * lua require'completion'.on_attach()");
+      const compe: Bufferline = require("compe");
+      compe.setup({
+        enabled: true,
+        autocomplete: true,
+        debug: true,
+        min_length: 1,
+        preselect: "enable",
+        throttle_time: 80,
+        source_timeout: 200,
+        incomplete_delay: 400,
+        max_abbr_width: 100,
+        max_kind_width: 100,
+        max_menu_width: 100,
+        documentation: true,
+
+        source: {
+          path: true,
+          buffer: true,
+          calc: true,
+          nvim_lsp: true,
+          nvim_lua: true,
+        },
+      });
     },
   },
   {
-    [1]: "junegunn/fzf.vim",
-  },
-  {
-    [1]: "iamcco/markdown-preview.nvim",
-    run: "cd app && yarn install",
-    config: () => {
-      vim.g.mkdp_echo_preview_url = 0;
-      vim.g.mkdp_auto_start = 1;
-    },
+    [1]: "npxbr/glow.nvim",
+    run: ":GlowInstall",
   },
   {
     [1]: "sbdchd/neoformat",
@@ -310,7 +290,11 @@ const plugins: PluginConfigs = [
     },
   },
   {
-    [1]: "scrooloose/nerdcommenter",
+    [1]: "b3nj5m1n/kommentary",
+    setup: () => {
+      vim.g.kommentary_create_default_mappings = true;
+    },
+    config: () => {},
   },
   {
     [1]: "kyazdani42/nvim-tree.lua",
@@ -341,7 +325,7 @@ const plugins: PluginConfigs = [
     opt: true,
   },
   {
-    [1]: "luochen1990/rainbow",
+    [1]: "p00f/nvim-ts-rainbow",
     config: () => {
       vim.g.rainbow_active = 1;
     },
@@ -359,6 +343,14 @@ const plugins: PluginConfigs = [
         },
         indent: {
           enable: true,
+        },
+        autopairs: {
+          enable: true,
+        },
+        rainbow: {
+          enable: true,
+          extended_mode: true,
+          max_file_lines: 1000,
         },
         textobjects: {
           select: {
@@ -382,10 +374,18 @@ const plugins: PluginConfigs = [
     },
   },
   {
-    [1]: "lifepillar/vim-gruvbox8",
+    [1]: "navarasu/onedark.nvim",
   },
   {
-    [1]: "tpope/vim-surround",
+    [1]: "nvim-telescope/telescope.nvim",
+    requires: ["nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"],
+  },
+  {
+    [1]: "blackCauldron7/surround.nvim",
+
+    config: () => {
+      require("surround").setup();
+    },
   },
 ];
 export function init_plugins(): void {

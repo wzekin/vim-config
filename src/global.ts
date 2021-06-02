@@ -32,3 +32,10 @@ _G.SaveAndPause = () => {
   }
   vim.cmd("sus");
 };
+
+_G.InitCompletion = () => {
+  const disable_filetype = ["TelescopePrompt"];
+  if (!disable_filetype.includes(vim.bo.filetype)) {
+    require("completion").on_attach();
+  }
+};

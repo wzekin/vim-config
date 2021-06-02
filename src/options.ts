@@ -44,7 +44,7 @@ const options: OptionConfigs = {
   // 打开增量搜索模式,随着键入即时搜索
   incsearch: true,
   relativenumber: "number",
-  completeopt: "menuone,noinsert,noselect",
+  completeopt: "menuone,noselect",
 };
 
 //for key, value in pairs(options) do
