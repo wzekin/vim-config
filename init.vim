@@ -7,11 +7,12 @@ filetype plugin on
 " 自适应不同语言的智能缩进
 filetype indent on
 
-colorscheme onedark
+colorscheme gruvbox
 
 " 终端透明
 hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
+hi! EndOfBuffer ctermbg=NONE guibg=NONE
 
 au FocusLost * :set norelativenumber number
 au FocusGained * :set relativenumber
@@ -44,3 +45,12 @@ augroup fmt
 augroup END
 
 command Refresh :write | edit | TSBufEnable highlight
+
+hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+augroup lsp_document_highlight
+autocmd!
+autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+augroup END
