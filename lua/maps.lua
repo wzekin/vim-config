@@ -52,14 +52,15 @@ local normalConfig = {
     {from = "[d", to = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"},
     {from = "]d", to = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
     -- 字符查找
-    {from = "f", to = "<Plug>(easymotion-f)"},
+    --[[ {from = "f", to = "<Plug>(easymotion-f)"},
     {from = "F", to = "<Plug>(easymotion-F)"},
     {from = "t", to = "<Plug>(easymotion-t)"},
     {from = "T", to = "<Plug>(easymotion-T)"},
     {from = "<leader>j", to = "<Plug>(easymotion-j)"},
-    {from = "<leader>k", to = "<Plug>(easymotion-k)"},
+    {from = "<leader>k", to = "<Plug>(easymotion-k)"}, ]]
     -- 注释
-    {from = "<leader>c<leader>", to = "<Plug>kommentary_line_default"}
+    {from = "<leader>c<leader>", to = "<Plug>kommentary_line_default"},
+    {from = "=G", to = "<cmd>Format<CR>"}
 }
 
 function M.init_maps()

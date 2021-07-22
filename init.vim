@@ -7,10 +7,13 @@ filetype plugin on
 " 自适应不同语言的智能缩进
 filetype indent on
 
-colorscheme gruvbox
+let g:onedark_style = 'warm'
+colorscheme onedark
 
 " 终端透明
 hi! Normal ctermbg=NONE guibg=NONE
+hi! NvimTreeNormal ctermbg=NONE guibg=NONE
+hi! NvimTreeEndOfBuffer ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
 hi! EndOfBuffer ctermbg=NONE guibg=NONE
 
@@ -39,10 +42,10 @@ command! Wq wq
 command! W w
 command! Q q
 
-augroup fmt
-  autocmd!
-  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ || endtry
-augroup END
+" augroup fmt
+"   autocmd!
+"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ || endtry
+" augroup END
 
 command Refresh :write | edit | TSBufEnable highlight
 
