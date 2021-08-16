@@ -277,6 +277,7 @@ local plugins = {
         "vimls",
         "pyright",
         "tsserver",
+        "hls",
         "metals"
       }
       local nvim_lsp = require("lspconfig")
@@ -363,6 +364,16 @@ local plugins = {
                   cwd = vim.fn.expand("%:p:h") -- Run clang-format in cwd of the file.
                 }
               end
+            },
+            haskell = {
+              -- clang-format
+              function()
+                return {
+                  exe = "hindent",
+                  args = {"--indent-size", 2},
+                  stdin = true
+                }
+              end
             }
           }
         }
@@ -371,7 +382,7 @@ local plugins = {
         [[
       augroup FormatAutogroup
       autocmd!
-      autocmd BufWritePost *.js,*.rs,*.lua FormatWrite
+      autocmd BufWritePost *.js,*.rs,*.lua,*.hs FormatWrite
       augroup END
         ]],
         true
