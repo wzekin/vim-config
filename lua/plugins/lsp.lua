@@ -1,0 +1,78 @@
+return {
+  -- copilot
+  {
+    [1] = "github/copilot.vim"
+  },
+  -- coq
+  {
+    [1] = "ms-jpq/coq_nvim",
+    branch = "coq",
+    setup = function()
+      vim.g.coq_settings = {
+        auto_start = "shut-up",
+        display = {
+          pum = {
+            fast_close = false
+          }
+        }
+      }
+    end,
+    config = function()
+      local coq = require("coq")
+      require("coq_3p") {
+        {src = "nvimlua", short_name = "nLUA", conf_only = true},
+        {src = "copilot", short_name = "COP", tmp_accept_key = "<c-r>"}
+      }
+    end
+  },
+  {
+    [1] = "ms-jpq/coq.artifacts",
+    branch = "artifacts"
+  },
+  {
+    [1] = "ms-jpq/coq.thirdparty",
+    branch = "3p"
+  },
+  -- lsp local config
+  {
+    [1] = "neovim/nvim-lspconfig",
+    config = function()
+      local servers = {}
+      local coq = require("coq")
+      local nvim_lsp = require("lspconfig")
+      for ____, lsp in ipairs(servers) do
+        nvim_lsp[lsp].setup({})
+        nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({}))
+      end
+    end
+  },
+  -- lsp install config
+  {
+    "williamboman/nvim-lsp-installer",
+    config = function()
+      local lsp_installer = require("nvim-lsp-installer")
+      lsp_installer.on_server_ready(
+        function(server)
+          local opts = {}
+          server:setup(opts)
+          server:setup(coq.lsp_ensure_capabilities(opts))
+        end
+      )
+    end
+  },
+  -- metals
+  {
+    [1] = "scalameta/nvim-metals",
+    requires = {"nvim-lua/plenary.nvim"},
+    config = function()
+      vim.cmd(
+        [[
+  augroup lsp
+    au!
+    au FileType scala,sbt lua require("metals").initialize_or_attach({})
+  augroup end
+]]
+      )
+    end
+  }
+}

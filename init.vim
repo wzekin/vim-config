@@ -52,6 +52,7 @@ command Refresh :write | edit | TSBufEnable highlight
 hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
 hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
 hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+
 augroup lsp_document_highlight
 autocmd!
 autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
