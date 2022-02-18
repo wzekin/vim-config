@@ -1,271 +1,96 @@
 return {
   -- onedark
   {
-    [1] = "navarasu/onedark.nvim"
-  },
-  -- lualine
+    [1] = "navarasu/onedark.nvim",
+    config = function()
+      require('onedark').setup {
+        -- Main options --
+        style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+        transparent = true, -- Show/hide background
+        term_colors = true, -- Change terminal color as per the selected theme style
+        ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+        -- toggle theme style ---
+        toggle_style_key = '<leader>ts', -- Default keybinding to toggle
+        toggle_style_list = {
+          'dark',
+          'darker',
+          'cool',
+          'deep',
+          'warm',
+          'warmer',
+          'light'
+        }, -- List of styles to toggle between
+
+        -- Change code style ---
+        -- Options are italic, bold, underline, none
+        -- You can configure multiple style with comma seperated, For e.g., keywords = 'italic,bold'
+        code_style = {
+          comments = 'italic',
+          keywords = 'none',
+          functions = 'none',
+          strings = 'none',
+          variables = 'none'
+        },
+
+        -- Custom Highlights --
+        colors = {}, -- Override default colors
+        highlights = {FloatBorder = {fg = "$cyan"}}, -- Override highlight groups
+
+        -- Plugins Config --
+        diagnostics = {
+          darker = true, -- darker colors for diagnostic
+          undercurl = true, -- use undercurl instead of underline for diagnostics
+          background = true -- use background color for virtual text
+        }
+      }
+      vim.lsp.handlers['textDocument/hover'] =
+          vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'})
+      vim.lsp.handlers['textDocument/signatureHelp'] =
+          vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'})
+
+      require('onedark').load()
+    end
+  }, -- lualine
   {
     [1] = "hoob3rt/lualine.nvim",
     requires = {"kyazdani42/nvim-web-devicons", "navarasu/onedark.nvim"},
     config = function()
-      local lualine = require("lualine")
-      local colors = require("onedark.colors")
-
-      local conditions = {
-        buffer_not_empty = function()
-          return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
-        end,
-        hide_in_width = function()
-          return vim.fn.winwidth(0) > 80
-        end,
-        check_git_workspace = function()
-          local filepath = vim.fn.expand("%:p:h")
-          local gitdir = vim.fn.finddir(".git", filepath .. ";")
-          return gitdir and #gitdir > 0 and #gitdir < #filepath
-        end
-      }
-      local config = {
-        options = {
-          -- Disable sections and component separators
-          component_separators = "",
-          section_separators = "",
-          theme = {
-            -- We are going to use lualine_c an lualine_x as left and
-            -- right section. Both are highlighted by c theme .  So we
-            -- are just setting default looks o statusline
-            normal = {c = {fg = colors.fg, bg = colors.bg0}},
-            inactive = {c = {fg = colors.fg, bg = colors.bg0}}
-          }
-        },
-        sections = {
-          -- these are to remove the defaults
-          lualine_a = {},
-          lualine_b = {},
-          lualine_y = {},
-          lualine_z = {},
-          -- These will be filled later
-          lualine_c = {},
-          lualine_x = {}
-        },
-        inactive_sections = {
-          -- these are to remove the defaults
-          lualine_a = {},
-          lualine_v = {},
-          lualine_y = {},
-          lualine_z = {},
-          lualine_c = {},
-          lualine_x = {}
-        }
-      }
-      -- Inserts a component in lualine_c at left section
-      local function ins_left(component)
-        table.insert(config.sections.lualine_c, component)
-      end
-
-      -- Inserts a component in lualine_x ot right section
-      local function ins_right(component)
-        table.insert(config.sections.lualine_x, component)
-      end
-
-      ins_left {
-        function()
-          return "▊"
-        end,
-        color = {fg = colors.blue}, -- Sets highlighting of component
-        left_padding = 0 -- We don't need space before this
-      }
-
-      ins_left {
-        -- mode component
-        function()
-          -- auto change color according to neovims mode
-          local mode_color = {
-            n = colors.red,
-            i = colors.green,
-            v = colors.blue,
-            [""] = colors.blue,
-            V = colors.blue,
-            c = colors.purple,
-            no = colors.red,
-            s = colors.yellow,
-            S = colors.yellow,
-            [""] = colors.yellow,
-            ic = colors.yellow,
-            R = colors.purple,
-            Rv = colors.purple,
-            cv = colors.red,
-            ce = colors.red,
-            r = colors.cyan,
-            rm = colors.cyan,
-            ["r?"] = colors.cyan,
-            ["!"] = colors.red,
-            t = colors.red
-          }
-          local color = mode_color[vim.fn.mode()]
-          if color == nil then
-            color = colors.red
-          end
-          vim.api.nvim_command("hi! LualineMode guifg=" .. color .. " guibg=" .. colors.bg0)
-          return ""
-        end,
-        color = "LualineMode",
-        left_padding = 0
-      }
-
-      ins_left {
-        -- filesize component
-        function()
-          local function format_file_size(file)
-            local size = vim.fn.getfsize(file)
-            if size <= 0 then
-              return ""
-            end
-            local sufixes = {"b", "k", "m", "g"}
-            local i = 1
-            while size > 1024 do
-              size = size / 1024
-              i = i + 1
-            end
-            return string.format("%.1f%s", size, sufixes[i])
-          end
-          local file = vim.fn.expand("%:p")
-          if string.len(file) == 0 then
-            return ""
-          end
-          return format_file_size(file)
-        end,
-        condition = conditions.buffer_not_empty
-      }
-
-      ins_left {
-        "filename",
-        condition = conditions.buffer_not_empty,
-        color = {fg = colors.purple, gui = "bold"}
-      }
-
-      ins_left {"location"}
-
-      ins_left {"progress", color = {fg = colors.fg, gui = "bold"}}
-
-      ins_left {
-        "diagnostics",
-        sources = {"nvim_lsp"},
-        symbols = {error = " ", warn = " ", info = " "},
-        color_error = colors.red,
-        color_warn = colors.yellow,
-        color_info = colors.cyan
-      }
-
-      -- Insert mid section. You can make any number of sections in neovim :)
-      -- for lualine it's any number greater then 2
-      ins_left {
-        function()
-          return "%="
-        end
-      }
-
-      ins_left {
-        -- Lsp server name .
-        function()
-          local msg = "No Active Lsp"
-          local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-          local clients = vim.lsp.get_active_clients()
-          if next(clients) == nil then
-            return msg
-          end
-          for _, client in ipairs(clients) do
-            local filetypes = client.config.filetypes
-            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-              return client.name
-            end
-          end
-          return msg
-        end,
-        icon = " LSP:",
-        color = {fg = "#ffffff", gui = "bold"}
-      }
-
-      -- Add components to right sections
-      ins_right {
-        "o:encoding", -- option component same as &encoding in viml
-        upper = true, -- I'm not sure why it's upper case either ;)
-        condition = conditions.hide_in_width,
-        color = {fg = colors.green, gui = "bold"}
-      }
-
-      ins_right {
-        "fileformat",
-        upper = true,
-        icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-        color = {fg = colors.green, gui = "bold"}
-      }
-
-      ins_right {
-        "branch",
-        icon = "",
-        condition = conditions.check_git_workspace,
-        color = {fg = colors.purple, gui = "bold"}
-      }
-
-      ins_right {
-        "diff",
-        -- Is it me or the symbol for modified us really weird
-        symbols = {added = " ", modified = "柳 ", removed = " "},
-        color_added = colors.green,
-        color_modified = colors.yellow,
-        color_removed = colors.red,
-        condition = conditions.hide_in_width
-      }
-
-      ins_right {
-        function()
-          return "▊"
-        end,
-        color = {fg = colors.blue},
-        right_padding = 0
-      }
-
-      -- Now don't forget to initialize lualine
-      lualine.setup(config)
+      require('lualine').setup({options = {theme = 'onedark'}})
     end
-  },
-  -- nvim-bufferline
+  }, -- nvim-bufferline
   {
     [1] = "akinsho/nvim-bufferline.lua",
     requires = {"kyazdani42/nvim-web-devicons"},
     config = function()
       local bufferline = require("bufferline")
-      bufferline.setup(
-        {
-          options = {
-            view = "multiwindow",
-            numbers = "ordinal",
-            buffer_close_icon = "",
-            modified_icon = "●",
-            close_icon = "",
-            left_trunc_marker = "",
-            right_trunc_marker = "",
-            max_name_length = 18,
-            max_prefix_length = 15,
-            tab_size = 18,
-            show_buffer_close_icons = true,
-            persist_buffer_sort = true,
-            enforce_regular_tabs = false,
-            always_show_bufferline = true,
-            sort_by = "extension"
-          }
+      bufferline.setup({
+        options = {
+          view = "multiwindow",
+          numbers = "ordinal",
+          buffer_close_icon = "",
+          modified_icon = "●",
+          close_icon = "",
+          left_trunc_marker = "",
+          right_trunc_marker = "",
+          max_name_length = 18,
+          max_prefix_length = 15,
+          tab_size = 18,
+          show_buffer_close_icons = true,
+          persist_buffer_sort = true,
+          enforce_regular_tabs = false,
+          always_show_bufferline = true,
+          sort_by = "extension"
         }
-      )
+      })
     end
-  },
-  -- nvim-tree
+  }, -- nvim-tree
   {
     [1] = "kyazdani42/nvim-tree.lua",
     requires = {"kyazdani42/nvim-web-devicons"},
     config = function()
-      local tree_cb = require "nvim-tree.config".nvim_tree_callback
+      local tree_cb = require"nvim-tree.config".nvim_tree_callback
       -- following options are the default
-      require "nvim-tree".setup {
+      require"nvim-tree".setup {
         -- disables netrw completely
         disable_netrw = false,
         -- hijack netrw window on startup
@@ -292,12 +117,7 @@ return {
         -- show lsp diagnostics in the signcolumn
         diagnostics = {
           enable = true,
-          icons = {
-            hint = "",
-            info = "",
-            warning = "",
-            error = ""
-          }
+          icons = {hint = "", info = "", warning = "", error = ""}
         },
         -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
         update_focused_file = {

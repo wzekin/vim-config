@@ -1,33 +1,21 @@
 return {
   -- copilot
-  {
-    [1] = "github/copilot.vim"
-  },
+  {[1] = "github/copilot.vim"},
   -- coq
   {
     [1] = "ms-jpq/coq_nvim",
     branch = "coq",
-    setup = function()
-      vim.g.coq_settings = {
-        auto_start = "shut-up",
-      }
-    end,
+    setup = function() vim.g.coq_settings = {auto_start = "shut-up"} end,
     config = function()
       -- local coq = require("coq")
       require("coq_3p") {
         {src = "nvimlua", short_name = "nLUA", conf_only = true},
-        {src = "copilot", short_name = "COP", accept_key = "<c-f>"},
+        {src = "copilot", short_name = "COP", accept_key = "<c-f>"}
       }
     end
   },
-  {
-    [1] = "ms-jpq/coq.artifacts",
-    branch = "artifacts"
-  },
-  {
-    [1] = "ms-jpq/coq.thirdparty",
-    branch = "3p"
-  },
+  {[1] = "ms-jpq/coq.artifacts", branch = "artifacts"},
+  {[1] = "ms-jpq/coq.thirdparty", branch = "3p"},
   -- lsp local config
   {
     [1] = "neovim/nvim-lspconfig",
@@ -45,18 +33,16 @@ return {
     "williamboman/nvim-lsp-installer",
     config = function()
       local lsp_installer = require("nvim-lsp-installer")
-      lsp_installer.on_server_ready(
-        function(server)
-          local opts = {}
-          local coq = require "coq"
-          server:setup(coq.lsp_ensure_capabilities(opts))
-        end
-      )
+      lsp_installer.on_server_ready(function(server)
+        local opts = {}
+        local coq = require "coq"
+        server:setup(coq.lsp_ensure_capabilities(opts))
+      end)
     end
   },
   {
     "kosayoda/nvim-lightbulb",
-    config =function ()
+    config = function()
       vim.cmd [[autocmd CursorHold, CursorHoldi, InsertLeave * lua UpdateBulb()]]
     end
   }

@@ -7,23 +7,6 @@ filetype plugin on
 " 自适应不同语言的智能缩进
 filetype indent on
 
-let g:onedark_config = {
-  \ 'style': 'warm',
-  \ 'ending_tildes': v:true,
-  \ 'diagnostics': {
-    \ 'darker': v:true,
-    \ 'background': v:true,
-  \ },
-\ }
-colorscheme onedark
-
-" 终端透明
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NvimTreeNormal ctermbg=NONE guibg=NONE
-hi! NvimTreeEndOfBuffer ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE
-hi! EndOfBuffer ctermbg=NONE guibg=NONE
-
 au FocusLost * :set norelativenumber number
 au FocusGained * :set relativenumber
 " 插入模式下用绝对行号, 普通模式下用相对
@@ -66,4 +49,6 @@ autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
 autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 augroup END
 
-autocmd BufWritePre *.rs,*.go lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.rs,*.go undojoin | lua vim.lsp.buf.formatting()
+
+autocmd BufWritePre *.lua undojoin | Neoformat

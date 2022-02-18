@@ -1,8 +1,5 @@
 local M = {}
-local insertConfig = {
-  {from = "jk", to = "<Esc>"},
-  {from = "kj", to = "<C-o>"}
-}
+local insertConfig = {{from = "jk", to = "<Esc>"}, {from = "kj", to = "<C-o>"}}
 local normalConfig = {
   -- 快速关闭
   {from = "<leader>qq", to = ":wqa<CR>"},
@@ -36,15 +33,30 @@ local normalConfig = {
   {from = "gd", to = "<Cmd>Telescope lsp_definitions<CR>"},
   {from = "gi", to = "<cmd>Telescope lsp_implementations<CR>"},
   {from = "K", to = "<Cmd>lua vim.lsp.buf.hover()<CR>"},
-  {from = "<C-k>", to = "<cmd>lua vim.lsp.buf.signature_help()<CR>"},
+  {from = "L", to = "<cmd>lua vim.lsp.buf.signature_help()<CR>"},
   {from = "<leader>wa", to = "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"},
-  {from = "<leader>wr", to = "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"},
-  {from = "<leader>wl", to = "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"},
+  {
+    from = "<leader>wr",
+    to = "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"
+  },
+  {
+    from = "<leader>wl",
+    to = "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"
+  },
   {from = "<leader>D", to = "<cmd>lua vim.lsp.buf.type_definition()<CR>"},
   {from = "<leader>rn", to = "<cmd>lua vim.lsp.buf.rename()<CR>"},
-  {from = "<leader>e", to = "<cmd>lua vim.diagnostic.open_float(0, { scope = \"line\", border = \"single\" })<CR>"},
-  {from = "[d", to = "<cmd>lua vim.diagnostic.goto_prev()<CR>"},
-  {from = "]d", to = "<cmd>lua vim.diagnostic.goto_next()<CR>"},
+  {
+    from = "<leader>e",
+    to = "<cmd>lua vim.diagnostic.open_float(0, { scope = \"line\", border = \"single\" })<CR>"
+  },
+  {
+    from = "[d",
+    to = "<cmd>lua vim.diagnostic.goto_prev({ float = {border = \"single\"}})<CR>"
+  },
+  {
+    from = "]d",
+    to = "<cmd>lua vim.diagnostic.goto_next({ float = {border = \"rounded\"}})<CR>"
+  },
   -- 字符查找
   --[[ {from = "f", to = "<Plug>(easymotion-f)"},
     {from = "F", to = "<Plug>(easymotion-F)"},
