@@ -29,23 +29,22 @@ local normalConfig = {
   {from = "<leader>p", to = "<cmd>Telescope projects<cr>"},
   {from = "<leader>t", to = "<cmd>Telescope builtin<cr>"},
   -- LSP 相关
-  {from = "<leader>lr", to = "<cmd>Telescope lsp_references<cr>"},
-  {from = "<leader>ll", to = "<cmd>Telescope lsp_code_actions<cr>"},
-  {from = "<leader>ld", to = "<cmd>Telescope lsp_workspace_diagnostics<cr>"},
-  {from = "gD", to = "<Cmd>lua vim.lsp.buf.declaration()<CR>"},
-  {from = "gd", to = "<Cmd>lua vim.lsp.buf.definition()<CR>"},
+  {from = "<leader>ld", to = "<cmd>Telescope diagnostics bufnr=0<cr>"},
+  {from = "<leader>lD", to = "<cmd>Telescope diagnostics<cr>"},
+  {from = "gl", to = "<cmd>Telescope lsp_code_actions theme=get_cursor<cr>"},
+  {from = "gr", to = "<cmd>Telescope lsp_references<CR>"},
+  {from = "gd", to = "<Cmd>Telescope lsp_definitions<CR>"},
+  {from = "gi", to = "<cmd>Telescope lsp_implementations<CR>"},
   {from = "K", to = "<Cmd>lua vim.lsp.buf.hover()<CR>"},
-  {from = "gi", to = "<cmd>lua vim.lsp.buf.implementation()<CR>"},
   {from = "<C-k>", to = "<cmd>lua vim.lsp.buf.signature_help()<CR>"},
   {from = "<leader>wa", to = "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"},
   {from = "<leader>wr", to = "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"},
   {from = "<leader>wl", to = "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"},
   {from = "<leader>D", to = "<cmd>lua vim.lsp.buf.type_definition()<CR>"},
   {from = "<leader>rn", to = "<cmd>lua vim.lsp.buf.rename()<CR>"},
-  {from = "gr", to = "<cmd>lua vim.lsp.buf.references()<CR>"},
-  {from = "<leader>e", to = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"},
-  {from = "[d", to = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"},
-  {from = "]d", to = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
+  {from = "<leader>e", to = "<cmd>lua vim.diagnostic.open_float(0, { scope = \"line\", border = \"single\" })<CR>"},
+  {from = "[d", to = "<cmd>lua vim.diagnostic.goto_prev()<CR>"},
+  {from = "]d", to = "<cmd>lua vim.diagnostic.goto_next()<CR>"},
   -- 字符查找
   --[[ {from = "f", to = "<Plug>(easymotion-f)"},
     {from = "F", to = "<Plug>(easymotion-F)"},
@@ -54,7 +53,7 @@ local normalConfig = {
     {from = "<leader>j", to = "<Plug>(easymotion-j)"},
     {from = "<leader>k", to = "<Plug>(easymotion-k)"}, ]]
   -- 注释
-  {from = "=G", to = "<cmd>Format<CR>"}
+  {from = "=G", to = "<cmd>lua vim.lsp.buf.formatting()<CR>"}
 }
 
 function M.init_maps()

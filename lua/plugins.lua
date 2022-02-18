@@ -18,110 +18,6 @@ local plugins = {
     end
   },
   {
-    [1] = "mhartington/formatter.nvim",
-    config = function()
-      require("formatter").setup(
-        {
-          logging = false,
-          filetype = {
-            c = {
-              -- clang-format
-              function()
-                return {
-                  exe = "clang-format",
-                  args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-                  stdin = true,
-                  cwd = vim.fn.expand("%:p:h") -- Run clang-format in cwd of the file.
-                }
-              end
-            },
-            cpp = {
-              -- clang-format
-              function()
-                return {
-                  exe = "clang-format",
-                  args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-                  stdin = true,
-                  cwd = vim.fn.expand("%:p:h") -- Run clang-format in cwd of the file.
-                }
-              end
-            },
-            javascript = {
-              -- prettier
-              function()
-                return {
-                  exe = "prettier",
-                  args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote"},
-                  stdin = true
-                }
-              end
-            },
-            rust = {
-              -- Rustfmt
-              function()
-                return {
-                  exe = "rustfmt",
-                  args = {"--emit=stdout"},
-                  stdin = true
-                }
-              end
-            },
-            lua = {
-              -- luafmt
-              function()
-                return {
-                  exe = "luafmt",
-                  args = {"--indent-count", 2, "--stdin"},
-                  stdin = true
-                }
-              end
-            },
-            cpp = {
-              -- clang-format
-              function()
-                return {
-                  exe = "clang-format",
-                  args = {},
-                  stdin = true,
-                  cwd = vim.fn.expand("%:p:h") -- Run clang-format in cwd of the file.
-                }
-              end
-            },
-            haskell = {
-              -- clang-format
-              function()
-                return {
-                  exe = "hindent",
-                  args = {"--indent-size", 2},
-                  stdin = true
-                }
-              end
-            },
-            scala = {
-              -- scalafmt
-              function()
-                return {
-                  exe = "scalafmt",
-                  args = {"--stdin"},
-                  stdin = true
-                }
-              end
-            }
-          }
-        }
-      )
-      vim.api.nvim_exec(
-        [[
-      augroup FormatAutogroup
-      autocmd!
-      autocmd BufWritePost *.js,*.rs,*.lua,*.hs,*.scala,*.c FormatWrite
-      augroup END
-        ]],
-        true
-      )
-    end
-  },
-  {
     "numToStr/Comment.nvim",
     config = function()
       require("Comment").setup()
@@ -171,10 +67,8 @@ local plugins = {
   },
   {[1] = "nvim-telescope/telescope.nvim", requires = {"nvim-lua/plenary.nvim"}},
   {
-    [1] = "blackCauldron7/surround.nvim",
-    branch = "master",
+    [1] = "machakann/vim-sandwich",
     config = function()
-      require("surround").setup({})
     end
   }
 }
@@ -187,10 +81,11 @@ function M.init_plugins()
   local packer = require("packer")
 
   local lsp_plugins = require("plugins.lsp")
-  local window_plugins = require("plugins.window")
   for I = 1, #lsp_plugins do
     plugins[#plugins + 1] = lsp_plugins[I]
   end
+
+  local window_plugins = require("plugins.window")
   for I = 1, #window_plugins do
     plugins[#plugins + 1] = window_plugins[I]
   end

@@ -10,18 +10,13 @@ return {
     setup = function()
       vim.g.coq_settings = {
         auto_start = "shut-up",
-        display = {
-          pum = {
-            fast_close = false
-          }
-        }
       }
     end,
     config = function()
-      local coq = require("coq")
+      -- local coq = require("coq")
       require("coq_3p") {
         {src = "nvimlua", short_name = "nLUA", conf_only = true},
-        {src = "copilot", short_name = "COP", tmp_accept_key = "<c-r>"}
+        {src = "copilot", short_name = "COP", accept_key = "<c-f>"},
       }
     end
   },
@@ -41,7 +36,6 @@ return {
       local coq = require("coq")
       local nvim_lsp = require("lspconfig")
       for ____, lsp in ipairs(servers) do
-        nvim_lsp[lsp].setup({})
         nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({}))
       end
     end
@@ -54,25 +48,16 @@ return {
       lsp_installer.on_server_ready(
         function(server)
           local opts = {}
-          server:setup(opts)
+          local coq = require "coq"
           server:setup(coq.lsp_ensure_capabilities(opts))
         end
       )
     end
   },
-  -- metals
   {
-    [1] = "scalameta/nvim-metals",
-    requires = {"nvim-lua/plenary.nvim"},
-    config = function()
-      vim.cmd(
-        [[
-  augroup lsp
-    au!
-    au FileType scala,sbt lua require("metals").initialize_or_attach({})
-  augroup end
-]]
-      )
+    "kosayoda/nvim-lightbulb",
+    config =function ()
+      vim.cmd [[autocmd CursorHold, CursorHoldi, InsertLeave * lua UpdateBulb()]]
     end
   }
 }

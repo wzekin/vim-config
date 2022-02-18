@@ -7,7 +7,14 @@ filetype plugin on
 " 自适应不同语言的智能缩进
 filetype indent on
 
-let g:onedark_style = 'warm'
+let g:onedark_config = {
+  \ 'style': 'warm',
+  \ 'ending_tildes': v:true,
+  \ 'diagnostics': {
+    \ 'darker': v:true,
+    \ 'background': v:true,
+  \ },
+\ }
 colorscheme onedark
 
 " 终端透明
@@ -58,3 +65,5 @@ autocmd!
 autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
 autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 augroup END
+
+autocmd BufWritePre *.rs,*.go lua vim.lsp.buf.formatting()
