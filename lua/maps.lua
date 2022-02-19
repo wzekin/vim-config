@@ -82,4 +82,5 @@ function M.init_maps()
   --   vim.api.nvim_set_keymap("v", n.from, n.to, options)
   -- end
 end
+
 return M

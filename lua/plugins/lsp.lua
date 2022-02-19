@@ -40,10 +40,9 @@ return {
       end)
     end
   },
+  {"kosayoda/nvim-lightbulb", config = function() vim.cmd [[]] end},
   {
-    "kosayoda/nvim-lightbulb",
-    config = function()
-      vim.cmd [[autocmd CursorHold, CursorHoldi, InsertLeave * lua UpdateBulb()]]
-    end
+    "antoinemadec/FixCursorHold.nvim",
+    setup = function() vim.g.cursorhold_updatetime = 500 end
   }
 }

@@ -39,16 +39,9 @@ command! Q q
 
 command Refresh :write | edit | TSBufEnable highlight
 
-hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-
-augroup lsp_document_highlight
-autocmd!
-autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+autocmd CursorHold * lua UpdateBulb()
+au BufWritePre *.go,*.rs lua vim.lsp.buf.formatting()
+augroup fmt
+  autocmd!
+  au BufWritePre *.lua try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
 augroup END
-
-autocmd BufWritePre *.rs,*.go undojoin | lua vim.lsp.buf.formatting()
-
-autocmd BufWritePre *.lua undojoin | Neoformat
