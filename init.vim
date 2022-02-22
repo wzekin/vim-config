@@ -32,16 +32,30 @@ command! Wq wq
 command! W w
 command! Q q
 
-" augroup fmt
-"   autocmd!
-"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ || endtry
-" augroup END
-
 command Refresh :write | edit | TSBufEnable highlight
 
 autocmd CursorHold * lua UpdateBulb()
-au BufWritePre *.go,*.rs lua vim.lsp.buf.formatting()
+
+fun! Format() abort
+    if &ft == 'golang\|rust'
+      lua vim.lsp.buf.formatting()
+    else
+      silent Neoformat
+    endif
+endfun
+
+fun! FormatWithUndo() abort
+  try
+    undojoin
+    call Format()
+  catch /^Vim\%((\a\+)\)\=:E790/
+  finally
+    call Format()
+  endtry
+endfun
+
+
 augroup fmt
   autocmd!
-  au BufWritePre *.lua try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+  au BufWritePre * call FormatWithUndo()
 augroup END
