@@ -27,35 +27,5 @@ if has("autocmd")
   endif
 endif
 
-command! WQ wq
-command! Wq wq
-command! W w
-command! Q q
-
-command Refresh :write | edit | TSBufEnable highlight
-
 autocmd CursorHold * lua UpdateBulb()
 
-fun! Format() abort
-    if &ft == 'golang\|rust'
-      lua vim.lsp.buf.formatting()
-    else
-      silent Neoformat
-    endif
-endfun
-
-fun! FormatWithUndo() abort
-  try
-    undojoin
-    call Format()
-  catch /^Vim\%((\a\+)\)\=:E790/
-  finally
-    call Format()
-  endtry
-endfun
-
-
-augroup fmt
-  autocmd!
-  au BufWritePre * call FormatWithUndo()
-augroup END

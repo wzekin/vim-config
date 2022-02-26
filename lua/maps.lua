@@ -11,10 +11,7 @@ local normalConfig = {
   {from = "<leader>ft", to = "<cmd>Telescope treesitter<cr>"},
 
   {from = "<leader>k", to = "<cmd>Telescope keymaps<cr>"},
-  {from = "<leader>p", to = "<cmd>Telescope projects<cr>"},
-  {from = "<leader>t", to = "<cmd>Telescope builtin<cr>"},
   -- LSP 相关
-  {from = "gl", to = "<cmd>Telescope lsp_code_actions theme=get_cursor<cr>"},
   {from = "gr", to = "<cmd>Telescope lsp_references<CR>"},
   {from = "gd", to = "<Cmd>Telescope lsp_definitions<CR>"},
   {from = "gi", to = "<cmd>Telescope lsp_implementations<CR>"},

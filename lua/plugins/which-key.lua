@@ -3,25 +3,36 @@ local M = {"folke/which-key.nvim"}
 function M.config()
   local wk = require("which-key")
   wk.register({
+    ["<leader><leader>"] = {
+      "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+      "frecency"
+    },
     ["<leader>b"] = {
       name = "Buffer",
-      l = {"<cmd>Telescope buffers<cr>", "List Buffers"},
-      n = {":BufferLineCycleNext<CR>", "Next Buffer"},
-      p = {":BufferLineCyclePrev<CR>", "Prev Buffer"},
-      d = {":bd<CR>", "Delete Buffer"},
-      c = {":lua CloseAllSavedBuffer()<CR>", "Clear Buffer"},
-      b = {":BufferLinePick<CR>", "Pick Buffer"}
+      l = {"<cmd>Telescope buffers theme=dropdown<cr>", "List Buffers"},
+      n = {":BufferNext<CR>", "Next Buffer"},
+      p = {":BufferPrevious<CR>", "Prev Buffer"},
+      d = {":BufferClose<CR>", "Delete Buffer"},
+      c = {":BufferCloseAllButCurrent<CR>", "Clear Buffer"},
+      b = {":BufferPick<CR>", "Pick Buffer"}
     },
     ["<leader>f"] = {
-      name = "+File",
-      f = {"<cmd>Telescope find_files<cr>", "Find File"},
+      name = "+Find",
+      f = {"<CMD>Telescope git_files<CR>", "Find File"},
+      F = {"yiw<CMD>Telescope git_files<CR><C-r>\"<ESC>", "Find File"},
       r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
-      g = {"<cmd>Telescope live_grep<cr>", "Search File"}
+      g = {"<cmd>Telescope live_grep<cr>", "Search File"},
+      G = {"<CMD>Telescope grep_string<CR><ESC>", "Search File"},
+      t = {"<cmd>Telescope treesitter<cr>", "Find treesitter symbols"},
+      p = {
+        "<cmd>lua require'telescope'.extensions.repo.list{file_ignore_patterns={'/%.cache/', '/%.cargo/', '/%.local/', '/%timeshift/', '/usr/', '/srv/', '/%.oh%-my%-zsh'}}<CR>",
+        "Find Project"
+      }
     },
 
     ["<leader>c"] = {
       name = "+Lsp",
-      a = {'<cmd>Telescope lsp_code_action<CR>', 'Code action'},
+      a = {'<cmd>Telescope lsp_code_actions theme=cursor<CR>', 'Code action'},
       d = {'<cmd>Telescope diagnostics bufnr=0<CR>', 'Local Diagnostics'},
       D = {'<cmd>Telescope diagnostics<CR>', 'Workspace Diagnostics'},
       f = {'<cmd>lua vim.lsp.buf.formatting()<CR>', 'format'},
