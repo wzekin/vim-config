@@ -64,6 +64,7 @@ function M.config()
     ["<leader>r"] = {
       name = "+Run",
       e = {'<cmd>AsyncTaskEdit<CR>', 'Edit Task'},
+      t = {'<cmd>lua require(\'telescope\').extensions.asynctasks.all()<CR>', 'Tasks'},
       f = {
         name = "+File",
         r = {'<cmd>AsyncTask file-run<CR>', 'Run File'},

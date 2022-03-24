@@ -3,6 +3,8 @@ local M = {[1] = "nvim-telescope/telescope.nvim"}
 M.requires = {
   "nvim-lua/plenary.nvim",
   "nvim-telescope/telescope-smart-history.nvim",
+  "GustavoKatel/telescope-asynctasks.nvim",
+  "tami5/sqlite.lua",
   {"nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
 }
 
