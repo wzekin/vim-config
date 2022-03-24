@@ -4,8 +4,8 @@ function M.config()
   local wk = require("which-key")
   wk.register({
     ["<leader><leader>"] = {
-      "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
-      "frecency"
+      "<Cmd>Telescope commands<CR>",
+      "commands"
     },
     ["<leader>b"] = {
       name = "Buffer",
@@ -59,6 +59,16 @@ function M.config()
       h = {'<cmd>Telescope oldfiles<CR>', 'file history'},
       H = {'<cmd>Telescope command_history<CR>', 'command history'},
       s = {'<cmd>Telescope search_history<CR>', 'search history'}
+    },
+
+    ["<leader>r"] = {
+      name = "+Run",
+      e = {'<cmd>AsyncTaskEdit<CR>', 'Edit Task'},
+      f = {
+        name = "+File",
+        r = {'<cmd>AsyncTask file-run<CR>', 'Run File'},
+        b = {'<cmd>AsyncTask file-build<CR>', 'Build File'},
+      },
     },
 
     K = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "Lsp Hover"},

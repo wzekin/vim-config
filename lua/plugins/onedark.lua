@@ -1,5 +1,7 @@
 local M = {"navarasu/onedark.nvim"}
 
+M.requires = {"hoob3rt/lualine.nvim"}
+
 function M.config()
 
   require('onedark').setup {
@@ -52,6 +54,7 @@ function M.config()
                                                        {border = 'rounded'})
 
   require('onedark').load()
+  require('lualine').setup({options = {theme = 'onedark'}})
 end
 
 return M

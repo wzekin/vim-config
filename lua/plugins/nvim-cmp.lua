@@ -5,6 +5,7 @@ M.requires = {
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
+  "f3fora/cmp-spell",
   'hrsh7th/cmp-vsnip',
   'hrsh7th/vim-vsnip',
   'williamboman/nvim-lsp-installer',
@@ -51,6 +52,7 @@ function M.config()
       {name = 'treesitter'},
       {name = 'vsnip'},
       {name = 'path'},
+      {name = 'spell'},
       {
         name = 'buffer',
         option = {

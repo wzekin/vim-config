@@ -16,6 +16,8 @@ local options = {
   cursorline = true,
   cursorcolumn = true,
   hlsearch = true,
+  foldlevel=20,
+  foldcolumn = 2,
   foldmethod = "expr",
   foldexpr = "nvim_treesitter#foldexpr()",
   nofoldenable = true,
@@ -23,9 +25,9 @@ local options = {
   undolevels = 1000,
   undoreload = 10000,
   undofile = true,
-  incsearch = true,
+  -- incsearch = true,
   relativenumber = "number",
-  completeopt = "menuone,noselect"
+  completeopt = "menuone,noselect",
 }
 
 function M.init_options()
