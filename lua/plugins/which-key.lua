@@ -23,7 +23,7 @@ function M.config()
       r = {"<cmd>Telescope oldfiles<cr>", "Open Recent File"},
       g = {"<cmd>Telescope live_grep<cr>", "Search File"},
       G = {"<CMD>Telescope grep_string<CR><ESC>", "Search File"},
-      t = {"<cmd>Telescope treesitter<cr>", "Find treesitter symbols"},
+      t = {"<cmd>Telescope aerial<cr>", "Find symbols"},
       p = {
         "<cmd>lua require'telescope'.extensions.repo.list{file_ignore_patterns={'/%.cache/', '/%.cargo/', '/%.local/', '/%timeshift/', '/usr/', '/srv/', '/%.oh%-my%-zsh'}}<CR>",
         "Find Project"
@@ -47,6 +47,7 @@ function M.config()
     ["<leader>t"] = {
       name = "+Toggle",
       d = {"<cmd>NvimTreeToggle<CR>", "Toggle File Tree"},
+      t = {"<cmd>AerialToggle!<CR>", "Toggle Aerial"},
       s = {"Toggle Style"}
     },
 

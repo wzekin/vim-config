@@ -86,14 +86,20 @@ function M.config()
 
   local lsp_installer = require("nvim-lsp-installer")
   lsp_installer.on_server_ready(function(server)
-    local opts = {capabilities = capabilities}
+    local opts = {
+      capabilities = capabilities,
+      on_attach = require("aerial").on_attach
+    }
     server:setup(opts)
   end)
 
   local servers = {}
   local nvim_lsp = require("lspconfig")
   for ____, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup({capabilities = capabilities})
+    nvim_lsp[lsp].setup({
+      capabilities = capabilities,
+      on_attach = require("aerial").on_attach
+    })
   end
 end
 
