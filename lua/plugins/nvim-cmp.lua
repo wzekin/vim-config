@@ -90,6 +90,15 @@ function M.config()
       capabilities = capabilities,
       on_attach = require("aerial").on_attach
     }
+    if server.name == "rust_analyzer" then
+      opts.settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = {
+            allTargets = false
+          }
+        }
+      }
+    end
     server:setup(opts)
   end)
 
