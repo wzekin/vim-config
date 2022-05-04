@@ -25,7 +25,7 @@ local function scandir(path)
   return res
 end
 
-function M.init_plugins()
+function M.setup()
   -- init packer
   local install_path = tostring(vim.fn.stdpath("data")) ..
                            "/site/pack/packer/opt/packer.nvim"

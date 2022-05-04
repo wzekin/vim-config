@@ -1,4 +1,4 @@
-local M = {"numToStr/Comment.nvim"}
+local M = { "numToStr/Comment.nvim" }
 
 function M.config()
   require("Comment").setup()

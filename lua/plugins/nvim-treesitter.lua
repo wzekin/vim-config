@@ -10,7 +10,7 @@ M.requires = {
 function M.config()
   local config = require("nvim-treesitter.configs")
   config.setup({
-    ensure_installed = "maintained",
+    ensure_installed = "all",
     highlight = {enable = true},
     indent = {enable = true},
     autopairs = {enable = true},

@@ -8,18 +8,10 @@ local normalConfig = {
   {from = "<leader><Tab>", to = "<C-^>"},
   -- 窗口
   -- 文件查找
-  {from = "<leader>ft", to = "<cmd>Telescope treesitter<cr>"},
-
   {from = "<leader>k", to = "<cmd>Telescope keymaps<cr>"},
-  -- LSP 相关
-  {from = "gr", to = "<cmd>Telescope lsp_references<CR>"},
-  {from = "gd", to = "<Cmd>Telescope lsp_definitions<CR>"},
-  {from = "gi", to = "<cmd>Telescope lsp_implementations<CR>"},
-
-  {from = "=G", to = "<cmd>lua vim.lsp.buf.formatting()<CR>"}
 }
 
-function M.init_maps()
+function M.setup()
   for _, i in ipairs(insertConfig) do
     local options = i.options or {silent = true}
     vim.api.nvim_set_keymap("i", i.from, i.to, options)
