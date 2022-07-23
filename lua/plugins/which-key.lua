@@ -5,8 +5,7 @@ function M.config()
   local wk = require("which-key")
   wk.register({
     ["<leader><leader>"] = {
-      "<Cmd>Telescope commands<CR>",
-      "commands"
+      function() require("telescope.builtin").oldfiles() end, "Open Recent File",
     },
     ["<leader>b"] = {
       name = "Buffer",
@@ -26,7 +25,6 @@ function M.config()
           require("telescope.builtin").find_files()
         end
       end, "Find File" },
-      r = { function() require("telescope.builtin").oldfiles() end, "Open Recent File" },
       g = { function() require("telescope.builtin").live_grep() end, "Search File" },
       G = { function() require("telescope.builtin").grep_string() end, "Search File" },
       t = { function() require("telescope.builtin").lsp_workspace_symbols() end, "Find symbols" },
@@ -37,7 +35,7 @@ function M.config()
       a = { function() vim.lsp.buf.code_action() end, 'Code action' },
       d = { function() require("telescope.builtin").diagnostics { bufnr = 1 } end, 'Local Diagnostics' },
       D = { function() require("telescope.builtin").diagnostics() end, 'Workspace Diagnostics' },
-      f = { function() vim.lsp.buf.format { async = true } end, 'format' },
+      f = { function() vim.lsp.buf.formatting {} end, 'format' },
       l = {
         function() vim.diagnostic.open_float(0, { scope = "line", border = "single" }) end,
         'line diagnostics'
@@ -49,6 +47,7 @@ function M.config()
       name = "+Toggle",
       d = { "<cmd>NvimTreeToggle<CR>", "Toggle File Tree" },
       t = { "<cmd>AerialToggle!<CR>", "Toggle Aerial" },
+      l = { function() require("lsp_lines").toggle() end, "Toggle lsp_lines" },
       s = { "Toggle Style" }
     },
 

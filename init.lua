@@ -14,3 +14,5 @@ vim.api.nvim_create_user_command("W", "w", {})
 vim.api.nvim_create_user_command("Q", "q", {})
 vim.api.nvim_create_user_command("Refresh", ":write | edit | TSBufEnable highlight", {})
 vim.api.nvim_create_user_command("Compile", ":source init.lua | PackerCompile", {})
+
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
