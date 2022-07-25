@@ -1,9 +1,10 @@
-local M = {'romgrk/barbar.nvim'}
-M.requires = {'kyazdani42/nvim-web-devicons'}
+local M = { 'romgrk/barbar.nvim' }
+M.requires = { 'kyazdani42/nvim-web-devicons' }
 
-function M.setup()
-  -- Set barbar's options
-  vim.g.bufferline = {
+M.disable = false
+
+function M.config()
+  require 'bufferline'.setup {
     -- Enable/disable animations
     animation = true,
 
@@ -67,7 +68,7 @@ function M.setup()
 
     -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
     -- where X is the buffer number. But only a static string is accepted here.
-    no_name_title = nil
+    no_name_title = nil,
   }
 end
 

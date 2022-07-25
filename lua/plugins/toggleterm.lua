@@ -1,5 +1,7 @@
 local M = { "akinsho/toggleterm.nvim" }
 
+M.disable = false
+
 M.tag = 'v2.*'
 
 function M.config()

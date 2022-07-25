@@ -1,11 +1,13 @@
 local M = { [1] = "nvim-telescope/telescope.nvim" }
 
+M.disable = false
+
 M.requires = {
   "nvim-lua/plenary.nvim",
   "nvim-telescope/telescope-smart-history.nvim",
   "GustavoKatel/telescope-asynctasks.nvim",
   "tami5/sqlite.lua",
-  {'nvim-telescope/telescope-ui-select.nvim', branch = 'master'},
+  { 'nvim-telescope/telescope-ui-select.nvim', branch = 'master' },
   { "nvim-telescope/telescope-fzf-native.nvim", run = 'make' }
 }
 
@@ -59,7 +61,6 @@ function M.config()
   }
 
   require('telescope').load_extension('smart_history')
-  require('telescope').load_extension('aerial')
   require('telescope').load_extension('fzf')
   require("telescope").load_extension("ui-select")
 end

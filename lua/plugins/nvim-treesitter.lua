@@ -1,4 +1,6 @@
-local M = {"nvim-treesitter/nvim-treesitter"}
+local M = { "nvim-treesitter/nvim-treesitter" }
+
+M.disable = false
 
 M.run = ":TSUpdate"
 
@@ -11,10 +13,13 @@ function M.config()
   local config = require("nvim-treesitter.configs")
   config.setup({
     ensure_installed = "all",
-    highlight = {enable = true},
-    indent = {enable = true},
-    autopairs = {enable = true},
-    rainbow = {enable = true, extended_mode = true, max_file_lines = 1000},
+    disable = function(lang, bufnr) -- Disable in large C++ buffers
+      return vim.api.nvim_buf_line_count(bufnr) > 10000
+    end,
+    highlight = { enable = true },
+    indent = { enable = true },
+    autopairs = { enable = true },
+    rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
     textobjects = {
       select = {
         enable = true,

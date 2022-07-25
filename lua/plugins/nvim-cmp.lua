@@ -1,4 +1,6 @@
-local M = {"hrsh7th/nvim-cmp"}
+local M = { "hrsh7th/nvim-cmp" }
+
+M.disable = false
 
 M.requires = {
   'hrsh7th/cmp-nvim-lsp',
@@ -17,6 +19,7 @@ function M.config()
   -- Setup nvim-cmp.
   local cmp = require 'cmp'
   local lspkind = require('lspkind')
+  local navic = require("nvim-navic")
 
   cmp.setup({
     formatting = {
@@ -38,8 +41,8 @@ function M.config()
       end
     },
     mapping = {
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-      ['<CR>'] = cmp.mapping.confirm({select = true}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       ['<C-e>'] = cmp.mapping.close(),
       ["<S-Tab>"] = cmp.mapping.select_prev_item(),
       ["<Tab>"] = cmp.mapping.select_next_item({
@@ -48,11 +51,11 @@ function M.config()
     },
 
     sources = {
-      {name = 'nvim_lsp'},
-      {name = 'treesitter'},
-      {name = 'vsnip'},
-      {name = 'path'},
-      {name = 'spell'},
+      { name = 'nvim_lsp' },
+      { name = 'treesitter' },
+      { name = 'vsnip' },
+      { name = 'path' },
+      { name = 'spell' },
       {
         name = 'buffer',
         option = {
@@ -67,28 +70,30 @@ function M.config()
   -- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-      {name = 'cmp_git'} -- You can specify the `cmp_git` source if you were installed it.
-    }, {{name = 'buffer'}})
+      { name = 'cmp_git' } -- You can specify the `cmp_git` source if you were installed it.
+    }, { { name = 'buffer' } })
   })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {sources = {{name = 'buffer'}}})
+  cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
+    sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
   })
 
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
-                                                                       .protocol
-                                                                       .make_client_capabilities())
+    .protocol
+    .make_client_capabilities())
 
   local lsp_installer = require("nvim-lsp-installer")
   lsp_installer.on_server_ready(function(server)
     local opts = {
       capabilities = capabilities,
-      on_attach = require("aerial").on_attach
+      on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
+      end
     }
     if server.name == "rust_analyzer" then
       opts.settings = {
@@ -104,26 +109,26 @@ function M.config()
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
       opts.settings = {
-          ["sumneko_lua"] = {
-              runtime = {
-                  -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                  version = "LuaJIT",
-                  -- Setup your lua path
-                  path = runtime_path
-              },
-              diagnostics = {
-                  -- Get the language server to recognize the `vim` global
-                  globals = {"vim"}
-              },
-              workspace = {
-                  -- Make the server aware of Neovim runtime files
-                  library = vim.api.nvim_get_runtime_file("", true)
-              },
-              -- Do not send telemetry data containing a randomized but unique identifier
-              telemetry = {
-                  enable = false
-              }
+        ["sumneko_lua"] = {
+          runtime = {
+            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+            version = "LuaJIT",
+            -- Setup your lua path
+            path = runtime_path
+          },
+          diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = { "vim" }
+          },
+          workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = vim.api.nvim_get_runtime_file("", true)
+          },
+          -- Do not send telemetry data containing a randomized but unique identifier
+          telemetry = {
+            enable = false
           }
+        }
       }
     end
     server:setup(opts)
@@ -134,10 +139,11 @@ function M.config()
   for ____, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup({
       capabilities = capabilities,
-      on_attach = require("aerial").on_attach
+      on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
+      end
     })
   end
 end
 
 return M
-

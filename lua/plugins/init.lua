@@ -1,5 +1,5 @@
 local M = {}
-local plugins = {{[1] = "wbthomason/packer.nvim", opt = true}}
+local plugins = { { [1] = "wbthomason/packer.nvim", opt = true } }
 
 local function scandir(path)
   local uv = vim.loop
@@ -28,10 +28,10 @@ end
 function M.setup()
   -- init packer
   local install_path = tostring(vim.fn.stdpath("data")) ..
-                           "/site/pack/packer/opt/packer.nvim"
+      "/site/pack/packer/opt/packer.nvim"
   if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.cmd("!git clone https://github.com/wbthomason/packer.nvim " ..
-                tostring(install_path))
+      tostring(install_path))
   end
   vim.cmd("packadd packer.nvim")
 
@@ -45,7 +45,8 @@ function M.setup()
     end
   end
 
-  packer.init({ensure_dependencies = true})
+  packer.init({ ensure_dependencies = true })
   packer.use(plugins)
 end
+
 return M

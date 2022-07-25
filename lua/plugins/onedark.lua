@@ -1,6 +1,8 @@
-local M = {"navarasu/onedark.nvim"}
+local M = { "navarasu/onedark.nvim" }
 
-M.requires = {"hoob3rt/lualine.nvim"}
+M.disable = false
+
+M.requires = { "hoob3rt/lualine.nvim" }
 
 function M.config()
 
@@ -35,7 +37,39 @@ function M.config()
 
     -- Custom Highlights --
     colors = {}, -- Override default colors
-    highlights = {FloatBorder = {fg = "$cyan"}}, -- Override highlight groups
+    highlights = {
+      FloatBorder = { fg = "$cyan" },
+      WinBarPath = { fg = "$fg" },
+      WinBarFile = { fg = "$green" },
+      NavicIconsFile = { fg = "$purple" },
+      NavicIconsModule = { fg = "$purple" },
+      NavicIconsNamespace = { fg = "$purple" },
+      NavicIconsPackage = { fg = "$purple" },
+      NavicIconsClass = { fg = "$purple" },
+      NavicIconsMethod = { fg = "$purple" },
+      NavicIconsProperty = { fg = "$purple" },
+      NavicIconsField = { fg = "$purple" },
+      NavicIconsConstructor = { fg = "$purple" },
+      NavicIconsEnum = { fg = "$purple" },
+      NavicIconsInterface = { fg = "$purple" },
+      NavicIconsFunction = { fg = "$purple" },
+      NavicIconsVariable = { fg = "$purple" },
+      NavicIconsConstant = { fg = "$purple" },
+      NavicIconsString = { fg = "$purple" },
+      NavicIconsNumber = { fg = "$purple" },
+      NavicIconsBoolean = { fg = "$purple" },
+      NavicIconsArray = { fg = "$purple" },
+      NavicIconsObject = { fg = "$purple" },
+      NavicIconsKey = { fg = "$purple" },
+      NavicIconsNull = { fg = "$purple" },
+      NavicIconsEnumMember = { fg = "$purple" },
+      NavicIconsStruct = { fg = "$purple" },
+      NavicIconsEvent = { fg = "$purple" },
+      NavicIconsOperator = { fg = "$purple" },
+      NavicIconsTypeParameter = { fg = "$purple" },
+      NavicText = { fg = "$fg" },
+      NavicSeparator = { fg = "$fg" },
+    }, -- Override highlight groups
 
     -- Plugins Config --
     diagnostics = {
@@ -46,7 +80,6 @@ function M.config()
   }
 
   require('onedark').load()
-  require('lualine').setup({options = {theme = 'onedark'}})
 end
 
 return M

@@ -1,5 +1,6 @@
 local M = { 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } }
 
+M.disable = false
 
 M.ft = { "scala" }
 

@@ -1,6 +1,8 @@
 -- local M = {"folke/which-key.nvim"}
 local M = { "max397574/which-key.nvim" }
 
+M.disable = false
+
 function M.config()
   local wk = require("which-key")
   wk.register({
@@ -27,7 +29,8 @@ function M.config()
       end, "Find File" },
       g = { function() require("telescope.builtin").live_grep() end, "Search File" },
       G = { function() require("telescope.builtin").grep_string() end, "Search File" },
-      t = { function() require("telescope.builtin").lsp_workspace_symbols() end, "Find symbols" },
+      ds = { function() require("telescope.builtin").lsp_document_symbols() end, "Find Document symbols" },
+      ws = { function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "Find WorkSpace symbols" },
     },
 
     ["<leader>c"] = {
@@ -46,7 +49,6 @@ function M.config()
     ["<leader>t"] = {
       name = "+Toggle",
       d = { "<cmd>NvimTreeToggle<CR>", "Toggle File Tree" },
-      t = { "<cmd>AerialToggle!<CR>", "Toggle Aerial" },
       l = { function() require("lsp_lines").toggle() end, "Toggle lsp_lines" },
       s = { "Toggle Style" }
     },

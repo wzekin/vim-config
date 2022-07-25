@@ -1,4 +1,6 @@
-local M = {"skywind3000/asynctasks.vim"}
+local M = { "skywind3000/asynctasks.vim" }
+
+M.disable = false
 
 M.requires = {
   "skywind3000/asyncrun.vim"
@@ -7,6 +9,5 @@ M.requires = {
 function M.config()
   vim.g.asyncrun_open = 6
 end
-
 
 return M

@@ -1,5 +1,7 @@
 local M = { "kevinhwang91/nvim-hlslens" }
 
+M.disable = false
+
 function M.config()
   local kopts = { noremap = true, silent = true }
 
