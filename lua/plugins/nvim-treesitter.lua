@@ -13,7 +13,7 @@ function M.config()
   local config = require("nvim-treesitter.configs")
   config.setup({
     ensure_installed = "all",
-    disable = function(lang, bufnr) -- Disable in large C++ buffers
+    disable = function(_, bufnr)
       return vim.api.nvim_buf_line_count(bufnr) > 10000
     end,
     highlight = { enable = true },

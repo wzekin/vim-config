@@ -10,16 +10,13 @@ M.requires = {
   "f3fora/cmp-spell",
   'hrsh7th/cmp-vsnip',
   'hrsh7th/vim-vsnip',
-  'williamboman/nvim-lsp-installer',
   'onsails/lspkind-nvim',
-  "neovim/nvim-lspconfig"
 }
 
 function M.config()
   -- Setup nvim-cmp.
   local cmp = require 'cmp'
   local lspkind = require('lspkind')
-  local navic = require("nvim-navic")
 
   cmp.setup({
     formatting = {
@@ -29,7 +26,7 @@ function M.config()
 
         -- The function below will be called before any actual modifications from lspkind
         -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-        before = function(entry, vim_item)
+        before = function(_, vim_item)
           return vim_item
         end
       })
@@ -82,68 +79,6 @@ function M.config()
     sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
   })
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp
-    .protocol
-    .make_client_capabilities())
-
-  local lsp_installer = require("nvim-lsp-installer")
-  lsp_installer.on_server_ready(function(server)
-    local opts = {
-      capabilities = capabilities,
-      on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-      end
-    }
-    if server.name == "rust_analyzer" then
-      opts.settings = {
-        ["rust-analyzer"] = {
-          checkOnSave = {
-            allTargets = false
-          }
-        }
-      }
-    end
-    if server.name == "sumneko_lua" then
-      local runtime_path = vim.split(package.path, ';')
-      table.insert(runtime_path, "lua/?.lua")
-      table.insert(runtime_path, "lua/?/init.lua")
-      opts.settings = {
-        ["sumneko_lua"] = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-            version = "LuaJIT",
-            -- Setup your lua path
-            path = runtime_path
-          },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = { "vim" }
-          },
-          workspace = {
-            -- Make the server aware of Neovim runtime files
-            library = vim.api.nvim_get_runtime_file("", true)
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false
-          }
-        }
-      }
-    end
-    server:setup(opts)
-  end)
-
-  local servers = {}
-  local nvim_lsp = require("lspconfig")
-  for ____, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup({
-      capabilities = capabilities,
-      on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-      end
-    })
-  end
 end
 
 return M

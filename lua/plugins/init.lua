@@ -38,12 +38,12 @@ function M.setup()
   local packer = require("packer")
 
   local _plugins = scandir(vim.fn.stdpath("config") .. "/lua/plugins")
-  for ____, p in pairs(_plugins) do
-    local name, ext = p:match "([^.]*).(.*)"
-    if ext == "lua" and name ~= "init" then
-      table.insert(plugins, require("plugins." .. name))
-    end
-  end
+   for _, p in pairs(_plugins) do
+     local name, ext = p:match "([^.]*).(.*)"
+     if ext == "lua" and name ~= "init" then
+       table.insert(plugins, require("plugins." .. name))
+     end
+   end
 
   packer.init({ ensure_dependencies = true })
   packer.use(plugins)
