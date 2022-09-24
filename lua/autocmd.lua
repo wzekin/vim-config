@@ -31,7 +31,7 @@ function M.setup()
   vim.api.nvim_create_autocmd({ "BufEnter" }, {
     pattern = "*",
     callback = function()
-      if vim.api.nvim_buf_line_count(0) < 1000 then
+      if vim.api.nvim_buf_line_count(0) < 10000 then
         vim.api.nvim_set_option('incsearch', true)
       else
         require('cmp').setup.buffer { enabled = false }
