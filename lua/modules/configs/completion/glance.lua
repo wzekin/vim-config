@@ -55,8 +55,8 @@ return function()
 				["<C-c>v"] = actions.jump_vsplit,
 				["<C-c>s"] = actions.jump_split,
 				["<C-c>t"] = actions.jump_tab,
-				["<C-p>"] = actions.previous_location,
-				["<C-n>"] = actions.next_location,
+				["<C-k>"] = actions.previous_location,
+				["<C-j>"] = actions.next_location,
 				["[]"] = actions.enter_win("list"), -- Focus list window
 			},
 		},

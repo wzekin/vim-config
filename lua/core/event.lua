@@ -20,6 +20,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(event)
 		if not _G._debugging then
 			mapping.lsp(event.buf)
+
+			if vim.api.nvim_buf_get_option(event.buf, "filetype") == "gotexttmpl" then
+				return
+			end
+
+			local client = vim.lsp.get_client_by_id(event.data.client_id)
+			if client.supports_method("textDocument/inlayHint") then
+				vim.lsp.inlay_hint.enable(event.buf, true)
+			end
 		end
 	end,
 })

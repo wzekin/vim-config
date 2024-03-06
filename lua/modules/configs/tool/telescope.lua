@@ -1,6 +1,7 @@
 return function()
 	local icons = { ui = require("modules.utils.icons").get("ui", true) }
 	local lga_actions = require("telescope-live-grep-args.actions")
+	local actions = require("telescope.actions")
 
 	require("modules.utils").load_plugin("telescope", {
 		defaults = {
@@ -68,7 +69,7 @@ return function()
 				-- define mappings, e.g.
 				mappings = { -- extend mappings
 					i = {
-						["<C-k>"] = lga_actions.quote_prompt(),
+						["<C-u>"] = lga_actions.quote_prompt(),
 						["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
 					},
 				},
