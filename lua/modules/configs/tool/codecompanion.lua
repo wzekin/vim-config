@@ -92,5 +92,24 @@ return function()
 				},
 			},
 		},
+		prompt_library = {
+			["Test"] = {
+				strategy = "inline",
+				description = "Generate some boilerplate HTML",
+				opts = {
+					mapping = "<leader>ch",
+				},
+				prompts = {
+					{
+						role = "system",
+						content = "你是一个成熟的代码工程师",
+					},
+					{
+						role = "user",
+						content = "<user_prompt>我现在不知道要怎么修改我的文件了，你能帮我修改当前这一行的文件吗，请仅输出代码，而且不要输出 markdown tag</user_prompt>",
+					},
+				},
+			},
+		},
 	})
 end
